@@ -111,9 +111,9 @@ def MIMO(clips: Sequence[vs.VideoNode],
             clip_aligned = clip
         clips_aligned.append(vs.core.std.Interleave([clip_aligned] * num_clips))
     clips_vf = vs.core.std.BlankClip(length=max_len * num_clips, varformat=True, varsize=True)
-    def _interleave(n: int, f: vs.VideoFrame) -> vs.VideoNode:
+    def _interleave(n: int) -> vs.VideoNode:
         return clips_aligned[n % num_clips]
-    interleaved = vs.core.std.FrameEval(clips_vf, _interleave, clips_aligned, clips)
+    interleaved = vs.core.std.FrameEval(clips_vf, _interleave)
 
     use_y4m = [False] * num_clips
     if y4m:
